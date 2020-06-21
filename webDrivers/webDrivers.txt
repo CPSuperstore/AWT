@@ -1,0 +1,5 @@
+Chrome Web Driver:
+https://chromedriver.chromium.org/downloads
+
+Edge Web Driver:
+https://www.selenium.dev/downloads/
