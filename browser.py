@@ -174,7 +174,7 @@ def highlight_element(selector, index=0, color="red", border=2):
     )
 
 
-def kill():
+def kill(status=0):
     """
     Kills execution of the script
     """
@@ -185,7 +185,7 @@ def kill():
 
     # close the driver and quit the application
     driver.quit()
-    sys.exit()
+    sys.exit(status)
 
 
 def raise_error(error_type, message):
@@ -201,5 +201,5 @@ def raise_error(error_type, message):
     ))
 
     # terminate and quit
-    kill()
+    kill(2)
     quit()

@@ -178,7 +178,7 @@ class CodeBlock:
                         "The following error has occurred @ File: '{}' - Line: {}".format(self.filename,
                                                                                           self.line_number)
                     )
-                    browser.kill()
+                    browser.kill(2)
                     quit()
 
                 continue
@@ -205,5 +205,5 @@ class CodeBlock:
                         self.filename, self.line_number
                     )
                 )
-                browser.kill()
+                browser.kill(2)
                 quit()
