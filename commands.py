@@ -112,7 +112,7 @@ def get_attr(selector, index=0, attribute="innerText"):
 
 
 def skip_to(point):
-    globals.line_number = globals.point_line_names[point]
+    globals.current_code_block.line_number = globals.current_code_block.points[point]
 
 
 def set_file(selector, path, index=0):
@@ -120,6 +120,9 @@ def set_file(selector, path, index=0):
 
 
 def set_variable(variable, value):
+    if value.replace('.','',1).isdigit():
+        value = float(value)
+
     globals.memory_heap[variable] = value
 
 
@@ -207,3 +210,7 @@ def prompt(text, action="yes"):
 
 def clear(selector, index=0):
     b.get_element_selector(selector, index).clear()
+
+
+def change(variable, delta):
+    globals.memory_heap[variable] += float(delta)

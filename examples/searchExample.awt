@@ -1,0 +1,10 @@
+GOTO https://store.steampowered.com/
+
+INPUT input#store_nav_search_term "Galaxy Wide Domination"
+
+CLICK a.match.ds_collapse_flag.app_impression_tracked
+
+HIGHLIGHT div.apphub_AppName
+HIGHLIGHT "span%Add to Cart"
+
+LOG "I know it is a shameless plug. Leave me alone."

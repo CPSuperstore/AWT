@@ -1,0 +1,10 @@
+SETVAR i 0
+
+POINT Top
+
+CHANGE i 1
+LOG "${i}"
+
+SWITCH "i < 10" SKIPTO Top
+
+LOG "Loop Completed"

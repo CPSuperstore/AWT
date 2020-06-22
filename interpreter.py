@@ -102,5 +102,6 @@ INTERPRETER = {
     "PROMPT": commands.prompt,
     "PASS": do_nothing,
     "CLEAR": commands.clear,
-    "ANTITEST": commands.anti_test
+    "ANTITEST": commands.anti_test,
+    "CHANGE": commands.change
 }

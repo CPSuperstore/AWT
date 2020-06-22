@@ -12,8 +12,8 @@ from selenium.common.exceptions import NoSuchWindowException
 # some python code
 # [end python]
 
-BLOCK_START_PATTERN = re.compile(r"\[start .*\]")
-BLOCK_END_PATTERN = re.compile(r"\[end .*\]")
+BLOCK_START_PATTERN = re.compile(r"LANGBLOCK .*")
+BLOCK_END_PATTERN = re.compile(r"ENDLANGBLOCK.*")
 
 # RegEx patterns to indicate the start and end of code blocks.
 # For example, a code block to click a button might look like this
@@ -160,7 +160,7 @@ class CodeBlock:
 
             # compile the code in a language block into a single string
             if re.match(BLOCK_START_PATTERN, s):
-                block_type = s[7:-1]
+                block_type = s[10:]
                 block = True
                 continue
 

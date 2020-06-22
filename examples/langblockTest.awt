@@ -1,0 +1,12 @@
+LOG "AWT code"
+
+LANGBLOCK Python
+
+print("Python code")
+
+for i in range(5):
+    print(i)
+
+ENDLANGBLOCK
+
+LOG "AWT code again"

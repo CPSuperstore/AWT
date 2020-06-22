@@ -1,0 +1,7 @@
+IMPORT importTest.awh GREETER
+
+GREETER.Greet Bilbo Baggins
+GREETER.Greet "John B." Smith
+
+GREETER.Greet2 Leonardo
+GREETER.Greet2 Leonardo "da Vinci"
