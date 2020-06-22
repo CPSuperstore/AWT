@@ -97,10 +97,10 @@ Those are the mandatory arguments. Here is a list of optional arguments with a b
 
 | Short Flag 	| Long Flag | Description |
 |---------	|--------------	|-----------	|
-| -e  	| --headless | Run the browser in headless mode (no GUI window opens). Not recommended for developing the script (easier to see the screen as the script executes). Headless is not supported by Edge, and is very temperamental on Chrome |
-| -i  	| --highlight | Highlight any element which is selected by the script with a 2px, solid red border. Helpful for debugging. |
-| -p  	| --pause-mode | Pause the script when it completes or when an error is raised. This is useful for getting a look at the final state of the browser when not in headless mode. Helpful for debugging. |
-| -h  	| --help | Displays the help text, and terminates the application |
+| -e | --headless | Run the browser in headless mode (no GUI window opens). Not recommended for developing the script (easier to see the screen as the script executes). Headless is not supported by Edge, and is very temperamental on Chrome |
+| -i | --highlight | Highlight any element which is selected by the script with a 2px, solid red border. Helpful for debugging. |
+| -p | --pause-mode | Pause the script when it completes or when an error is raised. This is useful for getting a look at the final state of the browser when not in headless mode. Helpful for debugging. |
+| -h | --help | Displays the help text, and terminates the application |
 
 ## AWT Naming Conventions
 AWT has a very strict style guide (WIP), which ensures all code written can be easily understood by anyone, 

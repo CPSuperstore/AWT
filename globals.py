@@ -1,4 +1,5 @@
 current_code_block = None
+final_screenshot = False
 
 filename = None
 line_number = 0

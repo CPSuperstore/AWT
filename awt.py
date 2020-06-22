@@ -22,18 +22,12 @@ optional arguments:
 import argparse
 import logging
 import os
+import datetime
 
 import browser
 import commands
 import globals
 from code_block import CodeBlock
-
-# setup logging configurations
-logging.basicConfig(
-    format='[%(asctime)s] (%(levelname)s) %(message)s',
-    level=logging.INFO,
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
 
 # handle command line argument setup
 parser = argparse.ArgumentParser(description='Executes a script to test websites')
@@ -60,7 +54,46 @@ parser.add_argument(
     action="store_true"
 )
 
+parser.add_argument(
+    "-s", "--screenshot",
+    help="Takes a screenshot of the browser window on termination. The value provided will be the name to save the screenshot as"
+)
+
+parser.add_argument(
+    "-l", "--log-file",
+    help="The name of the log file to output to"
+)
+
 args = parser.parse_args()
+
+log_handlers = [logging.StreamHandler()]
+
+if args.log_file is not None:
+    now = datetime.datetime.now()
+    for k, v in {
+        "[year]": str(now.year),
+        "[month]": str(now.month),
+        "[day]": str(now.day),
+        "[hour]": str(now.hour),
+        "[minute]": str(now.minute),
+        "[second]": str(now.second)
+    }.items():
+        args.log_file = args.log_file.replace(k, v)
+    log_handlers.append(logging.FileHandler(args.log_file))
+
+# setup logging configurations
+logging.basicConfig(
+    format='[%(asctime)s] (%(levelname)s) %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S',
+    handlers=log_handlers
+)
+
+if args.log_file is not None:
+    logging.info("Mirroring logging messages to '{}'".format(args.log_file))
+
+if args.screenshot is not None:
+    globals.final_screenshot = args.screenshot
 
 logging.info("Initializing AWT Interpreter...")
 

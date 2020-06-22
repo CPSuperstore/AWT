@@ -178,6 +178,8 @@ def kill(status=0):
     """
     Kills execution of the script
     """
+    if globals.final_screenshot is not False:
+        commands.screenshot(globals.final_screenshot)
 
     # if pause mode is enabled, pause execution
     if globals.terminate_pause:
