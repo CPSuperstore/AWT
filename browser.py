@@ -49,6 +49,7 @@ def initialize_browser(browser: str, headless: bool = False):
     driver_path = None
     if "driver" in browser_data:
         driver_path = browser_data["driver"]
+        driver_path = os.path.join(os.path.dirname(__file__), driver_path)
 
     # instantiate the browser with necessary configurations
     if options is None:
