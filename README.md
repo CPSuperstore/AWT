@@ -120,6 +120,18 @@ The following table shows which casing to use, and when.
 ## Command Reference
 Please visit the repository's [wiki](https://github.com/CPSuperstore/AWT/wiki) for a complete command reference.
 
+## Top 10 Frequently Used Command List
+- [GOTO](https://github.com/CPSuperstore/AWT/wiki/GOTO)
+- [INPUT](https://github.com/CPSuperstore/AWT/wiki/INPUT)
+- [CLICK](https://github.com/CPSuperstore/AWT/wiki/CLICK)
+- [HIGHLIGHT](https://github.com/CPSuperstore/AWT/wiki/HIGHLIGHT)
+- [TEST](https://github.com/CPSuperstore/AWT/wiki/TEST)
+- [KILL](https://github.com/CPSuperstore/AWT/wiki/KILL)
+- [LOG](https://github.com/CPSuperstore/AWT/wiki/LOG)
+- [BLOCK](https://github.com/CPSuperstore/AWT/wiki/BLOCK)
+- [CLEAR](https://github.com/CPSuperstore/AWT/wiki/CLEAR)
+- [CONFIRM](https://github.com/CPSuperstore/AWT/wiki/CONFIRM)
+
 ## Exit Codes
 The AWT interpreter may exit with any of the following exit codes:
 
