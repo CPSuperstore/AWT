@@ -128,6 +128,8 @@ class CodeBlock:
         while self.line_number < len(self.code):
             # get the current statement and increase the line number
             s = self.code[self.line_number]  # type: str
+            s.lstrip(" ")
+            s.lstrip("\t")
             self.line_number += 1
 
             # if the line should be ignored, skip it
