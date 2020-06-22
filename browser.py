@@ -111,12 +111,20 @@ def get_element_selector(selector: str, index=0, raise_exception_on_failure=Fals
             )
         )
 
+    inner_text_index = 0
     if inner_text_search:
         # if an inner text search is done, filter out all of the tags which do not match the specified inner text
         # a second array is used as you can not modify the size of an array as you are iterating through it
         matches = []
         for e in elements:
             if e.text == text:
+                if not get_mode:
+                    if inner_text_index == index:
+                        if globals.highlight_mode:
+                            highlight_element(e)
+                        return e
+                    
+                inner_text_index += 1
                 matches.append(e)
         elements = matches
 
