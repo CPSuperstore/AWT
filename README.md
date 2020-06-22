@@ -101,6 +101,8 @@ Those are the mandatory arguments. Here is a list of optional arguments with a b
 | -i | --highlight | Highlight any element which is selected by the script with a 2px, solid red border. Helpful for debugging. |
 | -p | --pause-mode | Pause the script when it completes or when an error is raised. This is useful for getting a look at the final state of the browser when not in headless mode. Helpful for debugging. |
 | -h | --help | Displays the help text, and terminates the application |
+| -s | --screenshot [filename] | Creates a screenshot called `filename` when the script is terminated (by completing execution or by an exception) |
+| -l | --log-file [filename] | Outputs log information to a file called `filename`. If the file exists, the log information will be appended. Use `[year]`, `[month]`, `[day]`, `[hour]`, `[minute]`, `[second]` in the filename to include the date and time of execution start in the log name  |
 
 ## AWT Naming Conventions
 AWT has a very strict style guide (WIP), which ensures all code written can be easily understood by anyone, 
@@ -117,3 +119,10 @@ The following table shows which casing to use, and when.
 
 ## Command Reference
 Please visit the repository's [wiki](https://github.com/CPSuperstore/AWT/wiki) for a complete command reference.
+
+## Exit Codes
+The AWT interpreter may exit with any of the following exit codes:
+
+- 0 = Successful execution
+- 1 = Unhandled Exception (Python)
+- 2 = Unhandled AWT Exception 
