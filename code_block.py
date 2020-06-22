@@ -3,6 +3,7 @@ import re
 import browser
 import logging
 import globals
+import sys
 from selenium.common.exceptions import NoSuchWindowException
 
 # RegEx patterns to indicate the start and end of language blocks.
@@ -174,14 +175,14 @@ class CodeBlock:
                     globals.current_code_block = self
                     code = ""
                 except SystemExit:
-                    quit()
+                    sys.exit()
                 except:
                     logging.exception(
                         "The following error has occurred @ File: '{}' - Line: {}".format(self.filename,
                                                                                           self.line_number)
                     )
                     browser.kill(2)
-                    quit()
+                    sys.exit(2)
 
                 continue
 
@@ -197,10 +198,10 @@ class CodeBlock:
                 globals.current_code_block = self
 
             except SystemExit:
-                quit()
+                sys.exit()
             except NoSuchWindowException:
                 logging.fatal("Execution terminated because browser window was externally closed")
-                quit()
+                sys.exit(2)
             except:
                 logging.exception(
                     "The following error has occurred @ File: '{}' - Line: {}".format(
@@ -208,4 +209,4 @@ class CodeBlock:
                     )
                 )
                 browser.kill(2)
-                quit()
+                sys.exit(2)

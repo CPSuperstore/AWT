@@ -29,7 +29,8 @@ pip install argparse
 Once the libraries have finished installing, skip ahead to the *Web Drivers* section.
 
 ### Standalone Executable
-First, you will need to download the latest build. The list of builds can be found [here](https://github.com/CPSuperstore/AWT/releases).
+First, you will need to download the latest build. 
+The list of builds can be found [here](https://github.com/CPSuperstore/AWT/releases).
 
 Optionally, you may add the executable to your computer's PATH/Environment variables so it can be accessed anywhere.
 
@@ -41,13 +42,16 @@ The following table indicates where to get the driver for each browser
 
 | Browser 	| Download URL 	| Save path 	|
 |---------	|--------------	|-----------	|
-| Chrome  	| https://chromedriver.chromium.org/downloads | `webDrivers/chromedriver.exe` |
-| Edge    	| https://www.selenium.dev/downloads/ (Selenium Server Option) | `webDrivers/msedgedriver.exe`          	|
+| Firefox  	| https://github.com/mozilla/geckodriver/releases | `webDrivers/geckodriver.exe` |
+| Chrome  	| https://sites.google.com/a/chromium.org/chromedriver/ | `webDrivers/chromedriver.exe` |
+| Edge    	| https://www.selenium.dev/downloads/ | `webDrivers/MicrosoftWebDriver.exe`          	|
+| Opera    	| https://github.com/operasoftware/operachromiumdriver/releases | `webDrivers/operadriver.exe` |
 
-*Note*: Support for other browsers will be added in the future. 
-Firefox is supported, but does not need a web driver on all machines.
+*Note*: If you do not plan on using a particular browser, you do not need to download the driver for it.
+Support for more browsers is coming soon.
 
-*Note*: If you do not plan on using a particular browser, you do not need to download the driver for it!
+*Note*: Ensure your browser is running the same version as the driver. 
+To be safe, ensure your browser is completely up to date, and get the latest version of the driver
 
 ## Hello World Example
 To test that everything has been properly installed, we will execute a `Hello World` project.
@@ -59,7 +63,8 @@ LOG "Hello World!"
 PAUSE
 ```
 
-*Note*: For a complete command reference, please visit the repository's [wiki](https://github.com/CPSuperstore/AWT/wiki)..
+*Note*: For a complete command reference, 
+please visit the repository's [wiki](https://github.com/CPSuperstore/AWT/wiki).
 
 If you are running AWT from Python source code, simply issue the following command in your terminal window:
 ```bash

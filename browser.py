@@ -226,4 +226,5 @@ def raise_error(error_type, message):
 
     # terminate and quit
     kill(2)
-    quit()
+    sys.exit(2)
+

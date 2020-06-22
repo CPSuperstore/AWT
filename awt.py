@@ -24,6 +24,8 @@ import logging
 import os
 import datetime
 
+import sys
+
 import browser
 import commands
 import globals
@@ -137,4 +139,5 @@ main.execute()
 
 # kill the browser
 browser.kill()
-quit()
+sys.exit(0)
+
