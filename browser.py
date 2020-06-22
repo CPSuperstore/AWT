@@ -9,6 +9,7 @@ import globals
 import logging
 import sys
 import commands
+import time
 
 driver = None  # type:webdriver.Firefox
 
@@ -25,6 +26,9 @@ BROWSERS = {
     },
     "edge": {
         "class": webdriver.Edge,
+    },
+    "ie": {
+        "class": webdriver.Ie
     },
     "opera": {
         "class": webdriver.Opera
@@ -202,6 +206,9 @@ def kill(status=0):
 
     # close the driver and quit the application
     driver.quit()
+
+    commands.log("--------[ Finished in {}s with exit code {} ]--------".format(round(time.time() - globals.start_time, 2), status))
+
     sys.exit(status)
 
 
