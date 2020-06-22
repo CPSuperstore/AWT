@@ -1,5 +1,17 @@
+Full List:
+https://www.selenium.dev/downloads/
+
+Firefox:
+https://github.com/mozilla/geckodriver/releases
+
 Chrome Web Driver:
-https://chromedriver.chromium.org/downloads
+https://sites.google.com/a/chromium.org/chromedriver/
 
 Edge Web Driver:
 https://www.selenium.dev/downloads/
+
+Internet Explorer:
+https://selenium-release.storage.googleapis.com/index.html?path=4.0/ (selenium-server-4.0.0-alpha-2.jar)
+
+Opera:
+https://github.com/operasoftware/operachromiumdriver/releases
