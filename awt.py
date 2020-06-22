@@ -95,6 +95,8 @@ if args.log_file is not None:
 if args.screenshot is not None:
     globals.final_screenshot = args.screenshot
 
+logging.info("--------[ {} : {} ]--------".format(args.filename, args.browser))
+
 logging.info("Initializing AWT Interpreter...")
 
 # set global properties
