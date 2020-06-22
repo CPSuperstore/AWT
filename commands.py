@@ -123,7 +123,7 @@ def set_variable(variable, value):
     if value.isdigit():
         value = int(value)
         
-    if value.replace('.','',1).isdigit():
+    elif value.replace('.','',1).isdigit():
         value = float(value)
 
     globals.memory_heap[variable] = value
