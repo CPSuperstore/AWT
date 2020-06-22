@@ -10,7 +10,7 @@ https://sites.google.com/a/chromium.org/chromedriver/
 Edge Web Driver:
 https://www.selenium.dev/downloads/
 
-Internet Explorer:
+Internet Explorer [NOTE: Not officially supported by AWT]:
 https://selenium-release.storage.googleapis.com/index.html?path=4.0/ (selenium-server-4.0.0-alpha-2.jar)
 
 Opera:
