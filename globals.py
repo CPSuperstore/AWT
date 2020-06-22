@@ -1,4 +1,7 @@
 import code_block
+import time
+
+start_time = time.time()
 
 current_code_block = None       # type: code_block.CodeBlock
 final_screenshot = False
