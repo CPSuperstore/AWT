@@ -22,11 +22,12 @@ BROWSERS = {
     "chrome": {
         "class": webdriver.Chrome,
         "options": webdriver.chrome.options.Options,
-        "driver": r"webDrivers\chromedriver.exe"
     },
     "edge": {
         "class": webdriver.Edge,
-        "driver": r"webDrivers\msedgedriver.exe"
+    },
+    "opera": {
+        "class": webdriver.Opera
     }
 }
 
@@ -53,13 +54,17 @@ def initialize_browser(browser: str, headless: bool = False):
         driver_path = os.path.join(os.path.dirname(__file__), driver_path)
 
     # instantiate the browser with necessary configurations
-    if options is None:
+    os.environ['PATH'] += ";" + os.path.join(os.path.dirname(__file__), "webDrivers")
+    if driver_path is None:
+        driver = browser_data["class"]()
+    elif options is None:
         driver = browser_data["class"](driver_path)
     else:
         driver = browser_data["class"](driver_path, options=options)
 
     # set the implicit wait time (maximum time to wait before giving up on finding elements)
     # and create the global action chain
+    driver.set_page_load_timeout(10)
     driver.implicitly_wait(10)
     globals.action_chain = ActionChains(driver)
 
