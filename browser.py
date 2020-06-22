@@ -3,6 +3,7 @@ import selenium.common.exceptions as selenium_exceptions
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver import ActionChains
+import os
 
 import globals
 import logging
