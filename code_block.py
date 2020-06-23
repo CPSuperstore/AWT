@@ -3,6 +3,7 @@ import re
 import browser
 import logging
 import globals
+import os
 from selenium.common.exceptions import NoSuchWindowException, StaleElementReferenceException
 
 # RegEx patterns to indicate the start and end of language blocks.
@@ -44,21 +45,30 @@ def ignore_line(s) -> bool:
 
 
 class CodeBlock:
-    def __init__(self, filename, block_args, code):
-        # TODO: Track filename as well as the block name
+    def __init__(self, filename, block_name, block_args, code, start_line):
         """
         This class represents and handles a runnable code block
         It has it's own variable scope which is copied from the global variable scope on each execution
-        :param filename: the name of the block
+        :param filename: the name of the file this block was read from
+        :param block_name: the name of the block
         :param block_args: the argument structure for the block
         :param code: the code which is contained within the block
+        :param start_line: The line where this block starts
         """
         self.filename = filename
+        self.block_name = block_name
+        self.start_line = start_line
         self.code = code
         self.points = {}            # the bindings between code points, and their line numbers
         self.line_number = 0        # current line number relative to the block.
                                     # Note that changing this during runtime will change the line of code
                                     # which will execute next
+
+        if "." in self.block_name:
+            self.alias, self.raw_block_name = self.block_name.split(".")
+        else:
+            self.alias = None
+            self.raw_block_name = self.block_name
 
         # build mandatory (block_args) and optional (block_default_arg_values) argument structure
         self.block_args = []
@@ -90,6 +100,10 @@ class CodeBlock:
             if s.startswith("POINT"):
                 b = shlex.split(s)
                 self.points[b[1].rstrip("\n")] = line + 1
+
+    @property
+    def current_line(self):
+        return self.line_number + self.start_line
 
     def execute(self, *block_args):
         """
@@ -177,8 +191,9 @@ class CodeBlock:
                     quit()
                 except:
                     logging.exception(
-                        "The following error has occurred @ File: '{}' - Line: {}".format(self.filename,
-                                                                                          self.line_number)
+                        "The following error has occurred @ File: '{}' - Line: {}".format(
+                            os.path.abspath(self.filename), self.current_line
+                        )
                     )
                     browser.kill(2)
                     quit()
@@ -213,7 +228,7 @@ class CodeBlock:
             except:
                 logging.exception(
                     "The following error has occurred @ File: '{}' - Line: {}".format(
-                        self.filename, self.line_number
+                        os.path.abspath(self.filename), self.current_line
                     )
                 )
                 browser.kill(2)
