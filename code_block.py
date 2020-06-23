@@ -3,7 +3,7 @@ import re
 import browser
 import logging
 import globals
-from selenium.common.exceptions import NoSuchWindowException
+from selenium.common.exceptions import NoSuchWindowException, StaleElementReferenceException
 
 # RegEx patterns to indicate the start and end of language blocks.
 # For example, the Python language block looks like this:
@@ -193,7 +193,16 @@ class CodeBlock:
 
             # interpret the command and handle all errors which arise
             try:
-                interpreter.interpret_command(s)
+                retry = 0
+                while True:
+                    try:
+                        interpreter.interpret_command(s)
+                        break
+                    except StaleElementReferenceException as e:
+                        retry += 0
+                        if retry >= globals.stale_element_retries:
+                            logging.fatal("Maximum retries exceeded {}".format(globals.stale_element_retries))
+                            raise e
                 globals.current_code_block = self
 
             except SystemExit:
