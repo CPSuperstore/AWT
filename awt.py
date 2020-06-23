@@ -128,7 +128,7 @@ block_type = None
 commands.import_module(globals.filename, None, literal_path=True)
 
 # create a code block from the starting file as the main/starting code block
-main = CodeBlock(globals.filename, [], steps)
+main = CodeBlock(os.path.abspath(globals.filename), "[MAIN]", [], steps, 0)
 
 logging.info("Initialization Complete. Commencing Command Execution...")
 
