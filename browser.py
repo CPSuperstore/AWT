@@ -249,8 +249,9 @@ def raise_error(error_type, message):
     """
 
     # log the error message as fatal (CRITICAL)
-    logging.fatal("{} - {} @ File: '{}' - Line: {}".format(
-        error_type, message, globals.current_code_block.filename, globals.current_code_block.line_number
+    logging.fatal("{} - {} @ File: '{}' - Block: '{}' - Line: {}".format(
+        error_type, message, globals.current_code_block.filename, globals.current_code_block.block_name,
+        globals.current_code_block.current_line
     ))
 
     # terminate and quit
