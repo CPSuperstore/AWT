@@ -75,7 +75,36 @@ def initialize_browser(browser: str, headless: bool = False):
 
 def get_element_selector(selector: str, index=0, raise_exception_on_failure=False, get_mode=False):
     """
+    Returns the element described by the parameters with the dynamic timeout
+    :param selector: The CSS selector
+    (use <selector>%<text> to search all elements that match "selector" with the inner text of "text")
+    :param index: if multiple selectors exist, which selector to return (default=0)
+    :param raise_exception_on_failure: the Python exception to raise if the element could not be found
+    (default=False - raise AWT SelectorNotFoundException)
+    :param get_mode: if all matching elements should be returned (ignore index param) (Default=False)
+    :return: matching Selenium element(s)
+    """
+    start = time.time()
+    while True:
+        try:
+            return locate_element(selector, index, RecursionError, get_mode)
+        except RecursionError:
+            if time.time() - start > globals.maximum_delay:
+                if raise_exception_on_failure is False:
+                    raise_error(
+                        "SelectorNotFoundException",
+                        "Could not find {}th occurrence of selector {}".format(index, selector)
+                    )
+                else:
+                    raise raise_exception_on_failure
+            time.sleep(globals.current_delay)
+            globals.current_delay *= 2
+
+
+def locate_element(selector: str, index=0, raise_exception_on_failure=False, get_mode=False):
+    """
     Returns the element described by the parameters
+    NOTE: call 'get_element_selector', not this funciton!
     :param selector: The CSS selector
     (use <selector>%<text> to search all elements that match "selector" with the inner text of "text")
     :param index: if multiple selectors exist, which selector to return (default=0)
