@@ -162,14 +162,19 @@ def import_module(path, alias, literal_path=False):
 
     with open(path) as f:
         code = []
-        for line in f.readlines():
+        block_start = -1
+
+        for i, line in enumerate(f.readlines()):
             if line.startswith("BLOCK"):
+                block_start = i
                 code = []
             code.append(line.rstrip("\n"))
             if line.startswith("ENDBLOCK"):
                 args = code[0].split(" ")[1:]
                 args[-1] = args[-1].rstrip("\n")
-                globals.code_blocks[mod_prefix + args[0]] = CodeBlock(mod_prefix + args[0], args[1:], code[1:])
+                globals.code_blocks[mod_prefix + args[0]] = CodeBlock(
+                    os.path.abspath(path), mod_prefix + args[0], args[1:], code[1:], block_start + 1
+                )
 
 
 def get_raw_elements(selector, index=0):
