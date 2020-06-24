@@ -1,6 +1,9 @@
 import logging
 import os
 import time
+
+import selenium.webdriver
+
 import globals
 from code_block import CodeBlock
 
@@ -162,14 +165,19 @@ def import_module(path, alias, literal_path=False):
 
     with open(path) as f:
         code = []
-        for line in f.readlines():
+        block_start = -1
+
+        for i, line in enumerate(f.readlines()):
             if line.startswith("BLOCK"):
+                block_start = i
                 code = []
             code.append(line.rstrip("\n"))
             if line.startswith("ENDBLOCK"):
                 args = code[0].split(" ")[1:]
                 args[-1] = args[-1].rstrip("\n")
-                globals.code_blocks[mod_prefix + args[0]] = CodeBlock(mod_prefix + args[0], args[1:], code[1:])
+                globals.code_blocks[mod_prefix + args[0]] = CodeBlock(
+                    os.path.abspath(path), mod_prefix + args[0], args[1:], code[1:], block_start + 1
+                )
 
 
 def get_raw_elements(selector, index=0):
@@ -217,3 +225,17 @@ def clear(selector, index=0):
 
 def change(variable, delta):
     globals.memory_heap[variable] += float(delta)
+
+
+def send_keys(selector, keys, index=0):
+    b.get_element_selector(selector, index).send_keys(keys)
+
+
+def date_input(selector, date, index=0):
+    remove_chars = [" ", "-", "/", "\\"]
+    for c in remove_chars:
+        date = date.replace(c, "")
+
+    selenium.webdriver.ActionChains(b.driver)\
+        .move_to_element(b.get_element_selector(selector, index)).click()\
+        .send_keys(date).perform()

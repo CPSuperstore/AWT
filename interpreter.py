@@ -13,6 +13,9 @@ def interpret_command(cmd):
     # break up the command into spaces
     broken_cmd = shlex.split(cmd)
 
+    if not broken_cmd:
+        return
+
     # if the command is declaring a point, skip execution
     if broken_cmd[0] == "POINT":
         return
@@ -25,17 +28,24 @@ def interpret_command(cmd):
     # if the command is a code block, execute the block
     if broken_cmd[0] in globals.code_blocks:
         globals.code_blocks[broken_cmd[0]].execute(*broken_cmd[1:])
+        return
+
+    for name, block in globals.code_blocks.items():
+        if block.alias is not None:
+            if name.replace(block.alias + ".", "") == broken_cmd[0]:
+                block.execute(*broken_cmd[1:])
+                return
 
     # if the command is an internal command, execute the command
-    elif broken_cmd[0] in INTERPRETER:
+    if broken_cmd[0] in INTERPRETER:
         INTERPRETER[broken_cmd[0]](*broken_cmd[1:])
+        return
 
     # if the command is neither a block or a command, raise the unknown command error
-    else:
-        browser.raise_error(
-            "UnknownCommandException",
-            "Unknown Command '{}'. Please Refer To The Manual For A List Of Commands!".format(cmd)
-        )
+    browser.raise_error(
+        "UnknownCommandException",
+        "Unknown Command '{}'. Please Refer To The Manual For A List Of Commands!".format(cmd)
+    )
 
 
 def conditional(condition, *actions):
@@ -45,20 +55,24 @@ def conditional(condition, *actions):
     :param actions: the command and arguments to execute if the statement evaluates to True.
     Optionally add a colon (:) followed by a command to execute if the condition evaluates to False
     """
+    def format_command(full_cmd: tuple):
+        cmd = full_cmd[0]
+        args = full_cmd[1:]
+        return cmd + " " + " ".join(['"{}"'.format(i) for i in args])
 
     # break the actions down into the True and False action (delimited by a colon)
     if ":" in actions:
-        true = " ".join(actions[:actions.index(":")])
-        false = " ".join(actions[actions.index(":") + 1:])
+        true = actions[:actions.index(":")]
+        false = actions[actions.index(":") + 1:]
     else:
-        true = " ".join(actions)
+        true = actions
         false = None
 
     # execute the appropriate action. Use the global memory heap when evaluating to allow access to variables
     if eval(condition, globals.memory_heap):
-        interpret_command(true)
+        interpret_command(format_command(true))
     elif false is not None:
-        interpret_command(false)
+        interpret_command(format_command(false))
 
 
 def do_nothing():
@@ -103,5 +117,7 @@ INTERPRETER = {
     "PASS": do_nothing,
     "CLEAR": commands.clear,
     "ANTITEST": commands.anti_test,
-    "CHANGE": commands.change
+    "CHANGE": commands.change,
+    "SENDKEYS": commands.send_keys,
+    "SETDATE": commands.date_input
 }
