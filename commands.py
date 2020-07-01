@@ -239,3 +239,16 @@ def date_input(selector, date, index=0):
     selenium.webdriver.ActionChains(b.driver)\
         .move_to_element(b.get_element_selector(selector, index)).click()\
         .send_keys(date).perform()
+    
+    
+def extract_html(filename, selector=None, index=0):
+    filename = os.path.join(globals.cwd, filename)
+
+    if selector is None:
+        html = b.driver.page_source
+    else:
+        html = b.get_element_selector(selector, index).get_attribute("innerHTML")
+
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(html)
+
