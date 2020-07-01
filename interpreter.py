@@ -119,5 +119,6 @@ INTERPRETER = {
     "ANTITEST": commands.anti_test,
     "CHANGE": commands.change,
     "SENDKEYS": commands.send_keys,
-    "SETDATE": commands.date_input
+    "SETDATE": commands.date_input,
+    "EXTRACT": commands.extract_html
 }
