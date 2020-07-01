@@ -115,7 +115,7 @@ with open(globals.filename) as f:
     steps = f.readlines()
 
 # set the application CWD
-globals.cwd = os.path.dirname(globals.filename)
+globals.cwd = os.path.dirname(os.path.abspath(globals.filename))
 
 logging.info("Initializing Web Browser...")
 
