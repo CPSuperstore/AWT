@@ -25,3 +25,5 @@ action_chain = None
 memory_heap = {}
 point_line_names = {}
 code_blocks = {}
+
+args = None
