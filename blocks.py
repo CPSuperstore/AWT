@@ -2,6 +2,12 @@ import globals
 import interpreter
 import os
 
+args = globals.args.args
+if args is None:
+    args = []
+else:
+    args = args.split(",")
+
 # initialize the memory heap with a binding to interpret a function
 # add each command in the interpreter to the heap as well (with lowercase names)
 # these items are added to allow Python blocks to access these functions as if they were built in
