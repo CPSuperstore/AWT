@@ -58,12 +58,20 @@ parser.add_argument(
 
 parser.add_argument(
     "-s", "--screenshot",
-    help="Takes a screenshot of the browser window on termination. The value provided will be the name to save the screenshot as"
+    help="Takes a screenshot of the browser window on termination. "
+         "The value provided will be the name to save the screenshot as"
 )
 
 parser.add_argument(
     "-l", "--log-file",
     help="The name of the log file to output to"
+)
+
+parser.add_argument(
+    "-a", "--args",
+    help="The command line arguments to pass into the script. "
+         "To access, use the variable 'args' in the memory heap. "
+         "Arguments should be comma-separated"
 )
 
 args = parser.parse_args()
@@ -107,7 +115,7 @@ globals.highlight_mode = args.highlight
 globals.terminate_pause = args.pause_mode
 
 # set the filename in the memory heap
-globals.memory_heap["filename"] = os.path.basename(globals.filename)
+globals.args = args
 
 # read the full file which will be executed
 # it is read all at once at the start, so file changes during execution will be ignored
@@ -140,4 +148,3 @@ main.execute()
 # kill the browser
 browser.kill()
 sys.exit(0)
-
