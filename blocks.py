@@ -1,12 +1,15 @@
 import globals
 import interpreter
+import os
 
 # initialize the memory heap with a binding to interpret a function
 # add each command in the interpreter to the heap as well (with lowercase names)
 # these items are added to allow Python blocks to access these functions as if they were built in
 globals.memory_heap = {
     "interpret": interpreter.interpret_command,
-    **{k.lower(): v for k, v in interpreter.INTERPRETER.items()}
+    **{k.lower(): v for k, v in interpreter.INTERPRETER.items()},
+    "filename": os.path.basename(globals.filename),
+    "args": globals.args.args.split(",")
 }
 
 
