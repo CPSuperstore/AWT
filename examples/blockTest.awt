@@ -12,7 +12,7 @@ BLOCK Greet2 firstName lastName=null
 
 # Any arguments in a switch statement which contain spaces must be surrounded by both double and single quotes
 # This is a known bug which will be resolved at a later date
-SWITCH "lastName == 'null'" LOG "'Welcome, ${firstName}'" : LOG "'Welcome, ${firstName} ${lastName}'"
+SWITCH "lastName == 'null'" LOG "Welcome, ${firstName}" : LOG "Welcome, ${firstName} ${lastName}"
 
 ENDBLOCK
 
