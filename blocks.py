@@ -15,7 +15,7 @@ globals.memory_heap = {
     "interpret": interpreter.interpret_command,
     **{k.lower(): v for k, v in interpreter.INTERPRETER.items()},
     "filename": os.path.basename(globals.filename),
-    "args": globals.args.args.split(",")
+    "args": args
 }
 
 
