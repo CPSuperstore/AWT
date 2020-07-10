@@ -252,3 +252,10 @@ def extract_html(filename, selector=None, index=0):
     with open(filename, 'w', encoding='utf-8') as f:
         f.write(html)
 
+
+def switch_to_newly_opened_window():
+    b.driver.switch_to.window(b.driver.window_handles[1])
+
+
+def switch_to_original_window():
+    b.driver.switch_to.window(globals.original_window)

@@ -72,6 +72,8 @@ def initialize_browser(browser: str, headless: bool = False):
     driver.implicitly_wait(10)
     globals.action_chain = ActionChains(driver)
 
+    globals.original_window = driver.window_handles[0]
+
 
 def get_element_selector(selector: str, index=0, raise_exception_on_failure=False, get_mode=False):
     """

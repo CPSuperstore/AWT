@@ -120,5 +120,7 @@ INTERPRETER = {
     "CHANGE": commands.change,
     "SENDKEYS": commands.send_keys,
     "SETDATE": commands.date_input,
-    "EXTRACT": commands.extract_html
+    "EXTRACT": commands.extract_html,
+    "SWITCHNEWWINDOW": commands.switch_to_newly_opened_window,
+    "SWITCHFIRSTWINDOW": commands.switch_to_original_window
 }
