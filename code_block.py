@@ -221,11 +221,18 @@ class CodeBlock:
                             raise e
                 globals.current_code_block = self
 
-            except SystemExit:
-                sys.exit()
+            except SystemExit as e:
+                sys.exit(e.code)
+                
             except NoSuchWindowException:
                 logging.fatal("Execution terminated because browser window was externally closed")
                 sys.exit(2)
+
+            except KeyboardInterrupt:
+                logging.error("Keyboard interrupt. Terminating execution with status code 3")
+                browser.kill(3)
+                sys.exit(3)
+
             except:
                 logging.exception(
                     "The following error has occurred @ File: '{}' - Line: {}".format(
