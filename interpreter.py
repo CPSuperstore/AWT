@@ -122,5 +122,8 @@ INTERPRETER = {
     "SETDATE": commands.date_input,
     "EXTRACT": commands.extract_html,
     "SWITCHNEWWINDOW": commands.switch_to_newly_opened_window,
-    "SWITCHFIRSTWINDOW": commands.switch_to_original_window
+    "SWITCHFIRSTWINDOW": commands.switch_to_original_window,
+    "TOIFRAME": commands.switch_to_iframe,
+    "FROMIFRAME": commands.switch_from_iframe,
+    "READFILE": commands.read_file
 }
