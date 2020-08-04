@@ -259,3 +259,16 @@ def switch_to_newly_opened_window():
 
 def switch_to_original_window():
     b.driver.switch_to.window(globals.original_window)
+
+
+def switch_to_iframe(selector, index=0):
+    b.driver.switch_to.frame(b.get_element_selector(selector, index))
+
+
+def switch_from_iframe():
+    b.driver.switch_to.default_content()
+
+
+def read_file(path, variable):
+    with open(path) as f:
+        globals.memory_heap[variable] = f.read()
