@@ -249,9 +249,8 @@ def extract_html(filename, selector=None, index=0):
     else:
         html = b.get_element_selector(selector, index).get_attribute("innerHTML")
 
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write(html)
-
+    with open(filename, 'wb') as f:
+        f.write(html.encode("utf8"))
 
 def switch_to_newly_opened_window():
     b.driver.switch_to.window(b.driver.window_handles[1])
@@ -270,5 +269,5 @@ def switch_from_iframe():
 
 
 def read_file(path, variable):
-    with open(path) as f:
+    with open(path, encoding="utf8") as f:
         globals.memory_heap[variable] = f.read()
