@@ -1,6 +1,10 @@
 import logging
 import os
 import time
+import difflib
+from colors import Colors
+import colorama
+colorama.init()
 
 import selenium.webdriver
 
@@ -271,3 +275,58 @@ def switch_from_iframe():
 def read_file(path, variable):
     with open(path, encoding="utf8") as f:
         globals.memory_heap[variable] = f.read()
+
+
+def compare(s1, s2):
+    if s1 in globals.memory_heap:
+        s1 = globals.memory_heap[s1]
+
+    if s2 in globals.memory_heap:
+        s2 = globals.memory_heap[s2]
+
+    output = ""
+    add = 0
+    remove = 0
+    good = 0
+
+    print(colorama.Back.WHITE + colorama.Fore.BLACK + "Character Position Difference" + colorama.Back.RESET + colorama.Fore.RESET)
+    print("Action Character Position")
+
+    for i, s in enumerate(difflib.ndiff(s1, s2)):
+        color = Colors.RESET
+        char = s[2]
+        if char == " ":
+            char = "·"
+            good += 1
+
+        if s[0] == '-':
+            print("{} {} {}".format(
+                Colors.RED + '-' + Colors.RESET, s[-1], i
+            ))
+            color = Colors.RED
+            add += 1
+
+        elif s[0] == '+':
+            print("{} {} {}".format(
+                Colors.GREEN + '+' + Colors.RESET, s[-1], i
+            ))
+            color = Colors.GREEN
+            remove += 1
+
+        output += color + char
+
+    if add + remove > 1:
+        print()
+        print(colorama.Back.WHITE + colorama.Fore.BLACK + "Text Position Difference" + colorama.Back.RESET + colorama.Fore.RESET)
+        print(output + "\n")
+
+    print(colorama.Back.WHITE + colorama.Fore.BLACK + "Final Report" + colorama.Back.RESET + colorama.Fore.RESET)
+    bads = add + remove
+    total = bads + good
+
+    print(Colors.GREEN             + "Additions   : {} ({}%)".format(add, round(add / total * 100, 2)))
+    print(Colors.RED               + "Removals    : {} ({}%)".format(remove, round(remove / total * 100, 2)))
+    print(colorama.Fore.MAGENTA    + "Total Issues: {} ({}%)".format(bads, round(bads / total * 100, 2)))
+    print(Colors.BOLD + colorama.Fore.RESET + "% Matched   : {}%".format(round(good / total * 100, 2)))
+
+    return good / total * 100
