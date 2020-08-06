@@ -278,6 +278,11 @@ def read_file(path, variable):
 
 
 def compare(s1, s2):
+    def init_msg():
+        print(
+            colorama.Back.WHITE + colorama.Fore.BLACK + "Character Position Difference" + colorama.Back.RESET + colorama.Fore.RESET)
+        print("Action Character Position")
+
     if s1 in globals.memory_heap:
         s1 = globals.memory_heap[s1]
 
@@ -289,8 +294,7 @@ def compare(s1, s2):
     remove = 0
     good = 0
 
-    print(colorama.Back.WHITE + colorama.Fore.BLACK + "Character Position Difference" + colorama.Back.RESET + colorama.Fore.RESET)
-    print("Action Character Position")
+    initial_message = False
 
     for i, s in enumerate(difflib.ndiff(s1, s2)):
         color = Colors.RESET
@@ -300,6 +304,9 @@ def compare(s1, s2):
             good += 1
 
         if s[0] == '-':
+            if initial_message is False:
+                init_msg()
+                initial_message = True
             print("{} {} {}".format(
                 Colors.RED + '-' + Colors.RESET, s[-1], i
             ))
@@ -307,6 +314,10 @@ def compare(s1, s2):
             add += 1
 
         elif s[0] == '+':
+            if initial_message is False:
+                init_msg()
+                initial_message = True
+
             print("{} {} {}".format(
                 Colors.GREEN + '+' + Colors.RESET, s[-1], i
             ))
@@ -315,18 +326,22 @@ def compare(s1, s2):
 
         output += color + char
 
+    bads = add + remove
+    total = bads + good
+
+    level = "info"
     if add + remove > 1:
         print()
         print(colorama.Back.WHITE + colorama.Fore.BLACK + "Text Position Difference" + colorama.Back.RESET + colorama.Fore.RESET)
         print(output + "\n")
 
-    print(colorama.Back.WHITE + colorama.Fore.BLACK + "Final Report" + colorama.Back.RESET + colorama.Fore.RESET)
-    bads = add + remove
-    total = bads + good
+        print(colorama.Back.WHITE + colorama.Fore.BLACK + "Final Report" + colorama.Back.RESET + colorama.Fore.RESET)
 
-    print(Colors.GREEN             + "Additions   : {} ({}%)".format(add, round(add / total * 100, 2)))
-    print(Colors.RED               + "Removals    : {} ({}%)".format(remove, round(remove / total * 100, 2)))
-    print(colorama.Fore.MAGENTA    + "Total Issues: {} ({}%)".format(bads, round(bads / total * 100, 2)))
-    print(Colors.BOLD + colorama.Fore.RESET + "% Matched   : {}%".format(round(good / total * 100, 2)))
+        print(Colors.GREEN             + "Additions   : {} ({}%)".format(add, round(add / total * 100, 2)))
+        print(Colors.RED               + "Removals    : {} ({}%)".format(remove, round(remove / total * 100, 2)))
+        print(colorama.Fore.MAGENTA    + "Total Issues: {} ({}%)".format(bads, round(bads / total * 100, 2)))
+        print(Colors.BOLD + colorama.Fore.RESET + "% Matched   : {}%".format(round(good / total * 100, 2)))
+        level = "error"
 
+    log("Detected {}% match between both strings".format(round(good / total * 100, 2)), level)
     return good / total * 100
