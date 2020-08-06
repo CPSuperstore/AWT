@@ -125,5 +125,6 @@ INTERPRETER = {
     "SWITCHFIRSTWINDOW": commands.switch_to_original_window,
     "TOIFRAME": commands.switch_to_iframe,
     "FROMIFRAME": commands.switch_from_iframe,
-    "READFILE": commands.read_file
+    "READFILE": commands.read_file,
+    "COMPARE": commands.compare
 }
