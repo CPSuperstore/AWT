@@ -245,7 +245,7 @@ def date_input(selector, date, index=0):
         .send_keys(date).perform()
     
     
-def extract_html(filename, selector=None, index=0):
+def extract_html(filename, selector=None, index=0, encoding="utf8"):
     filename = os.path.join(globals.cwd, filename)
 
     if selector is None:
@@ -254,7 +254,8 @@ def extract_html(filename, selector=None, index=0):
         html = b.get_element_selector(selector, index).get_attribute("innerHTML")
 
     with open(filename, 'wb') as f:
-        f.write(html.encode("utf8"))
+        f.write(html.encode(encoding))
+
 
 def switch_to_newly_opened_window():
     b.driver.switch_to.window(b.driver.window_handles[1])
@@ -272,8 +273,8 @@ def switch_from_iframe():
     b.driver.switch_to.default_content()
 
 
-def read_file(path, variable):
-    with open(path, encoding="utf8") as f:
+def read_file(path, variable, encoding="utf8"):
+    with open(path, encoding=encoding) as f:
         globals.memory_heap[variable] = f.read()
 
 
