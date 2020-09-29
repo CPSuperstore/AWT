@@ -93,7 +93,7 @@ if args.log_file is not None:
 
 # setup logging configurations
 logging.basicConfig(
-    format='[%(asctime)s] (%(levelname)s) %(message)s',
+    format='(%(asctime)s) [%(levelname)-8.8s] %(message)s',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S',
     handlers=log_handlers
@@ -140,7 +140,7 @@ commands.import_module(globals.filename, None, literal_path=True)
 # create a code block from the starting file as the main/starting code block
 main = CodeBlock(os.path.abspath(globals.filename), "[MAIN]", [], steps, 0)
 
-logging.info("Initialization Complete. Commencing Command Execution...")
+logging.info("Initialization Complete. Executing script Commands...")
 
 # execute the main script
 main.execute()

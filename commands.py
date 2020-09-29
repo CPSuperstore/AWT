@@ -1,6 +1,10 @@
 import logging
 import os
 import time
+import difflib
+from colors import Colors
+import colorama
+colorama.init()
 
 import selenium.webdriver
 
@@ -241,7 +245,7 @@ def date_input(selector, date, index=0):
         .send_keys(date).perform()
     
     
-def extract_html(filename, selector=None, index=0):
+def extract_html(filename, selector=None, index=0, encoding="utf8"):
     filename = os.path.join(globals.cwd, filename)
 
     if selector is None:
@@ -249,8 +253,8 @@ def extract_html(filename, selector=None, index=0):
     else:
         html = b.get_element_selector(selector, index).get_attribute("innerHTML")
 
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write(html)
+    with open(filename, 'wb') as f:
+        f.write(html.encode(encoding))
 
 
 def switch_to_newly_opened_window():
@@ -260,9 +264,84 @@ def switch_to_newly_opened_window():
 def switch_to_original_window():
     b.driver.switch_to.window(globals.original_window)
 
+def switch_to_iframe(selector, index=0):
+    b.driver.switch_to.frame(b.get_element_selector(selector, index))
 
-def read(filename, variable):
-    filename = os.path.join(globals.cwd, filename)
 
-    with open(filename, 'r', encoding='utf-8') as f:
+def switch_from_iframe():
+    b.driver.switch_to.default_content()
+
+
+def read_file(path, variable, encoding="utf8"):
+    with open(path, encoding=encoding) as f:
         globals.memory_heap[variable] = f.read()
+
+
+def compare(s1, s2):
+    def init_msg():
+        print(
+            colorama.Back.WHITE + colorama.Fore.BLACK + "Character Position Difference" + colorama.Back.RESET + colorama.Fore.RESET)
+        print("Action Character Position")
+
+    if s1 in globals.memory_heap:
+        s1 = globals.memory_heap[s1]
+
+    if s2 in globals.memory_heap:
+        s2 = globals.memory_heap[s2]
+
+    output = ""
+    add = 0
+    remove = 0
+    good = 0
+
+    initial_message = False
+
+    for i, s in enumerate(difflib.ndiff(s1, s2)):
+        color = Colors.RESET
+        char = s[2]
+        if char == " ":
+            char = "·"
+            good += 1
+
+        if s[0] == '-':
+            if initial_message is False:
+                init_msg()
+                initial_message = True
+            print("{} {} {}".format(
+                Colors.RED + '-' + Colors.RESET, s[-1], i
+            ))
+            color = Colors.RED
+            add += 1
+
+        elif s[0] == '+':
+            if initial_message is False:
+                init_msg()
+                initial_message = True
+
+            print("{} {} {}".format(
+                Colors.GREEN + '+' + Colors.RESET, s[-1], i
+            ))
+            color = Colors.GREEN
+            remove += 1
+
+        output += color + char
+
+    bads = add + remove
+    total = bads + good
+
+    level = "info"
+    if add + remove > 1:
+        print()
+        print(colorama.Back.WHITE + colorama.Fore.BLACK + "Text Position Difference" + colorama.Back.RESET + colorama.Fore.RESET)
+        print(output + "\n")
+
+        print(colorama.Back.WHITE + colorama.Fore.BLACK + "Final Report" + colorama.Back.RESET + colorama.Fore.RESET)
+
+        print(Colors.GREEN             + "Additions   : {} ({}%)".format(add, round(add / total * 100, 2)))
+        print(Colors.RED               + "Removals    : {} ({}%)".format(remove, round(remove / total * 100, 2)))
+        print(colorama.Fore.MAGENTA    + "Total Issues: {} ({}%)".format(bads, round(bads / total * 100, 2)))
+        print(Colors.BOLD + colorama.Fore.RESET + "% Matched   : {}%".format(round(good / total * 100, 2)))
+        level = "error"
+
+    log("Detected {}% match between both strings".format(round(good / total * 100, 2)), level)
+    return good / total * 100

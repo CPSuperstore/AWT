@@ -24,6 +24,7 @@ Next, we can handle the dependencies. There are 2 Python packages which are requ
 ```bash
 pip install selenium
 pip install argparse
+pip install colorama
 ```
 
 Once the libraries have finished installing, skip ahead to the *Web Drivers* section.

@@ -238,7 +238,12 @@ def kill(status=0):
     # close the driver and quit the application
     driver.quit()
 
-    commands.log("--------[ Finished in {}s with exit code {} ]--------".format(round(time.time() - globals.start_time, 2), status))
+    commands.log(
+        "--------[ Finished in {}s with exit code {} ]--------".format(
+            round(time.time() - globals.start_time, 2), status
+        ),
+        "info" if status == 0 else "error"
+    )
 
     sys.exit(status)
 
@@ -259,4 +264,3 @@ def raise_error(error_type, message):
     # terminate and quit
     kill(2)
     sys.exit(2)
-
