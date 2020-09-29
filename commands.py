@@ -259,3 +259,10 @@ def switch_to_newly_opened_window():
 
 def switch_to_original_window():
     b.driver.switch_to.window(globals.original_window)
+
+
+def read(filename, variable):
+    filename = os.path.join(globals.cwd, filename)
+
+    with open(filename, 'r', encoding='utf-8') as f:
+        globals.memory_heap[variable] = f.read()
